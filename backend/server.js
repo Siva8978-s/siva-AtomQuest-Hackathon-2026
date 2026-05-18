@@ -9,17 +9,20 @@ connectDB();
 
 const app = express();
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  process.env.FRONTEND_URL,
-].filter(Boolean);
-
 app.use(cors({
-    origin: [
-    'http://localhost:5173',
-    'https://siva-atom-quest-hackathon-2026.vercel.app'
-  ],
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    // Allow all vercel urls, localhost, and render
+    if (
+      !origin ||
+      origin.includes('vercel.app') ||
+      origin.includes('localhost') ||
+      origin.includes('onrender.com')
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 
