@@ -15,6 +15,10 @@ const allowedOrigins = [
 ].filter(Boolean);
 
 app.use(cors({
+    origin: [
+    'http://localhost:5173',
+    'https://siva-atom-quest-hackathon-2026.vercel.app'
+  ],
   origin: allowedOrigins,
   credentials: true,
 }));
